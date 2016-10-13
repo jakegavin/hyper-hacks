@@ -70,3 +70,51 @@ for i, keyTable in ipairs(symbolsTable) do
     end
   )
 end
+
+
+-- Sequential keybindings
+a = hs.hotkey.modal.new({}, "F16")
+
+pressedA = function()
+  a:enter()
+end
+
+releasedA = function()
+end
+
+k:bind({}, 'return', pressedA, releasedA)
+
+-- Launch function
+launch = function(appname)
+  hs.application.launchOrFocus(appname)
+  k.triggered = true
+end
+
+-- Launch apps with Hyper-Enter
+apps = {
+  {'a', 'Atom'},
+  {'c', 'Google Chrome'},
+  {'m', 'Spotify'},
+  {'s', 'Slack'},
+  {'t', 'iTerm'},
+}
+
+for i, app in ipairs(apps) do
+  a:bind(
+    {},
+    app[1],
+    function()
+      launch(app[2])
+      a:exit()
+    end
+  )
+end
+
+-- Exit launch mode with enter
+a:bind(
+  {},
+  'return',
+  function()
+    a:exit()
+  end
+)
