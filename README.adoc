@@ -1,6 +1,6 @@
 = hyper-hacks
 
-Here are my macOS Sierra hacks using some combination of Alfred 3, Karabiner-Elements, and Hammerspoon
+Here are my macOS Sierra hacks using some combination of Karabiner-Elements and Hammerspoon.
 
 == Background:
 
@@ -13,13 +13,10 @@ This hack with link:https://github.com/tekezo/Karabiner-Elements[Karabiner-Eleme
 * Install Hammerspoon
 * Install Karabiner-Elements
 * Put `hammerspoon/init.lua` in `~/.hammerspoon/init.lua`
-* Put `karabiner.d/configuration/karabiner.json` in `~/.karabiner.d/configuration/karabiner.json`
+* Use Karabiner-Elements to map your desired hyper key to `f18`. Alternatively, you can put `karabiner.d/configuration/karabiner.json` in `~/.karabiner.d/configuration/karabiner.json` which map `delete_forward` to `f18`.
 
 That's pretty much it.
 
-This is my first attempt and has a few examples in the `init.lua`. I aim to learn some more Lua and clean up the repetitious code.
-
-In the meantime, check out the link:https://github.com/lodestone/hyper-hacks/wiki[Wiki] for ideas on how to configure your `init.lua`.
 
 Reach out to me:
 

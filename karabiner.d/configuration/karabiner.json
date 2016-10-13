@@ -1,11 +1,11 @@
 {
-    "profiles": [
-        {
-            "name": "Default profile",
-            "selected": true,
-            "simple_modifications": {
-                "caps_lock": "f18"
-            }
-        }
-    ]
+  "profiles": [
+    {
+      "name": "Default profile",
+      "selected": true,
+      "simple_modifications": {
+        "delete_forward": "f18"
+      }
+    }
+  ]
 }

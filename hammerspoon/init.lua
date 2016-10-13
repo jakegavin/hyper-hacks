@@ -1,44 +1,21 @@
+-- Add unpack function
+function unpack(table, index)
+  index = index or 1
+  if table[index] ~= nil then
+    return table[index], unpack(table, index + 1)
+  end
+end
 
 -- A global variable for the Hyper Mode
-k = hs.hotkey.modal.new({}, "F17")
+k = hs.hotkey.modal.new({}, 'F17')
 
--- HYPER+L: Open news.google.com in the default browser
-lfun = function()
-  news = "app = Application.currentApplication(); app.includeStandardAdditions = true; app.doShellScript('open http://news.google.com')"
-  hs.osascript.javascript(news)
-  k.triggered = true
-end
-k:bind('', 'l', nil, lfun)
-
--- HYPER+M: Call a pre-defined trigger in Alfred 3
-mfun = function()
-  cmd = "tell application \"Alfred 3\" to run trigger \"emoj\" in workflow \"com.sindresorhus.emoj\" with argument \"\""
-  hs.osascript.applescript(cmd)
-  k.triggered = true
-end
-k:bind({}, 'm', nil, mfun)
-
--- HYPER+E: Act like ⌃e and move to end of line.
-efun = function()
-  hs.eventtap.keyStroke({'⌃'}, 'e')
-  k.triggered = true
-end
-k:bind({}, 'e', nil, efun)
-
--- HYPER+A: Act like ⌃a and move to beginning of line.
-afun = function()
-  hs.eventtap.keyStroke({'⌃'}, 'a')
-  k.triggered = true
-end
-k:bind({}, 'a', nil, afun)
-
--- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
+-- Enter Hyper Mode when F18 (Hyper) is pressed
 pressedF18 = function()
   k.triggered = false
   k:enter()
 end
 
--- Leave Hyper Mode when F18 (Hyper/Capslock) is pressed,
+-- Leave Hyper Mode when F18 (Hyper) is pressed,
 --   send ESCAPE if no other keys are pressed.
 releasedF18 = function()
   k:exit()
@@ -49,3 +26,47 @@ end
 
 -- Bind the Hyper key
 f18 = hs.hotkey.bind({}, 'F18', pressedF18, releasedF18)
+
+
+-- Symbols Layer
+-- .-----------------------------------------------------------------------------------.
+-- |      |      |      |      |      |      |      |      |      |      |      |      |
+-- |------+------+------+------+------+------+------+------+------+------+------+------|
+-- |      |      |      |      |  \   |  +   |  -   |  /   |      |      |      |      |
+-- |------+------+------+------+------+-------------+------+------+------+------+------|
+-- |      |  <   |  {   |  [   |  (   |  =   |  _   |  )   |  ]   |  }   |  >   |  `   |
+-- |------+------+------+------+------+------|------+------+------+------+------+------|
+-- |      |      |      |      |  <   |      |  |   |  >   |      |      |      |      |
+-- `-----------------------------------------------------------------------------------'
+
+symbolsTable = {
+  {'a', {{'shift'}, ','}},
+  {'s', {{'shift'}, '['}},
+  {'d', {{}, '['}},
+  {'f', {{'shift'}, '9'}},
+  {'g', {{}, '='}},
+  {'h', {{'shift'}, '-'}},
+  {'j', {{'shift'}, '0'}},
+  {'k', {{}, ']'}},
+  {'l', {{'shift'}, ']'}},
+  {';', {{'shift'}, '.'}},
+  {"'", {{}, '`'}},
+  {'r', {{}, '\\'}},
+  {'u', {{}, '/'}},
+  {'v', {{'shift'}, ','}},
+  {'m', {{'shift'}, '.'}},
+  {'n', {{'shift'}, '\\'}},
+  {'t', {{'shift'}, '='}},
+  {'y', {{}, '-'}},
+}
+
+for i, keyTable in ipairs(symbolsTable) do
+  k:bind(
+    {},
+    keyTable[1],
+    function()
+      hs.eventtap.keyStroke(unpack(keyTable[2]))
+      k.triggered = true
+    end
+  )
+end
